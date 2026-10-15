@@ -12,7 +12,28 @@
   --muted: #827f7a;
   --line: rgba(23, 23, 23, 0.14);
   --display: 'Barlow Condensed', Impact, sans-serif;
+  color-scheme: light;
 }
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --ink: #f3f1ed;
+  --paper: #171717;
+  --muted: #aaa6a0;
+  --line: rgba(243, 241, 237, 0.18);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+:root[data-theme='dark'] .site-header.is-scrolled { background: rgba(23, 23, 23, .94); }
+:root[data-theme='dark'] .product-image-wrap { background: #292724; }
+:root[data-theme='dark'] .site-footer,
+:root[data-theme='dark'] .numbers-band { background: #0d0d0d; }
+:root[data-theme='dark'] .mobile-menu,
+:root[data-theme='dark'] .search-input { background: #171717; color: var(--ink); }
+:root[data-theme='dark'] .search-input::placeholder { color: var(--muted); }
+:root[data-theme='dark'] .button-dark { color: #171717; background: #f3f1ed; }
+:root[data-theme='dark'] .button-light { color: #171717; background: #f3f1ed; }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 90px; }

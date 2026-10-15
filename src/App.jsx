@@ -15,10 +15,12 @@ import {
   Check,
   Instagram,
   Menu,
+  Moon,
   Minus,
   Plus,
   Search,
   ShoppingBag,
+  Sun,
   X,
 } from 'lucide-react';
 
@@ -31,6 +33,9 @@ const products = [
   { id: 4, name: 'Everyday Form', category: 'Streetwear', price: 112, tag: 'NEW COLOR', color: 'Bone / Moss', image: 'https://images.unsplash.com/photo-1495555961986-6d4c1ecb7be3?auto=format&fit=crop&w=1100&q=85', bestseller: true },
   { id: 5, name: 'Pace System 2', category: 'Running', price: 138, tag: 'RUN CLUB PICK', color: 'Ash / Cobalt', image: 'https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=1100&q=85', bestseller: false },
   { id: 6, name: 'Baseline Pro', category: 'Basketball', price: 154, tag: 'COURT READY', color: 'White / Black', image: 'https://images.unsplash.com/photo-1600269452121-4f2416e55c28?auto=format&fit=crop&w=1100&q=85', bestseller: false },
+  { id: 7, name: 'Studio Low', category: 'Streetwear', price: 119, tag: 'NEW ARRIVAL', color: 'Sail / Gum', image: 'https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=1100&q=85', bestseller: false },
+  { id: 8, name: 'Tempo Flow', category: 'Running', price: 142, tag: 'LIGHTWEIGHT', color: 'Cloud / Lime', image: 'https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=1100&q=85', bestseller: false },
+  { id: 9, name: 'All-Court 2', category: 'Basketball', price: 172, tag: 'COURT READY', color: 'Black / Volt', image: 'https://images.unsplash.com/photo-1519861531473-9200262188bf?auto=format&fit=crop&w=1100&q=85', bestseller: false },
 ];
 
 const categories = ['All pairs', 'Running', 'Streetwear', 'Basketball'];
@@ -157,6 +162,7 @@ function CartDrawer({ cart, onClose, onChangeQuantity, onRemove }) {
 }
 
 function App() {
+  const [darkMode, setDarkMode] = useState(() => window.localStorage.getItem('stride-theme') === 'dark');
   const [intro, setIntro] = useState(true);
   const [scrolled, setScrolled] = useState(false);
   const [activeCategory, setActiveCategory] = useState('All pairs');
@@ -176,6 +182,11 @@ function App() {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => { window.clearTimeout(timer); window.removeEventListener('scroll', handleScroll); window.clearTimeout(toastTimer.current); };
   }, []);
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
+    window.localStorage.setItem('stride-theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
 
   const cartCount = Object.values(cart).reduce((total, item) => total + item.quantity, 0);
   const filteredProducts = products.filter((product) => {
@@ -260,6 +271,9 @@ function App() {
           </AnimatePresence>
           <button className={`icon-button search-toggle${searchOpen ? ' active' : ''}`} type="button" aria-label={searchOpen ? 'Close search' : 'Search'} onClick={() => { setSearchOpen((open) => !open); if (searchOpen) setQuery(''); }}>
             {searchOpen ? <X size={19} /> : <Search size={19} />}
+          </button>
+          <button className="icon-button theme-toggle" type="button" aria-label={darkMode ? 'Switch to light mode' : 'Switch to dark mode'} aria-pressed={darkMode} onClick={() => setDarkMode((enabled) => !enabled)}>
+            {darkMode ? <Sun size={19} /> : <Moon size={19} />}
           </button>
           <button className="bag-button" type="button" onClick={() => setCartOpen(true)} aria-label={`Open bag, ${cartCount} items`}>
             <ShoppingBag size={19} strokeWidth={1.7} /><span className="bag-label">Bag</span><motion.span className="bag-count" key={cartCount} initial={{ scale: 0.65 }} animate={{ scale: 1 }}>{cartCount}</motion.span>
